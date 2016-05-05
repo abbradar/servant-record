@@ -16,7 +16,7 @@ import Servant.Record
 -- Generation of records with fields of types `TypeF n`, where `n :: Nat`
 --
 
--- Less type safe that we want due to multi-stage compilation absense, so we
+-- Less type safe than we want due to multi-stage compilation absense, so we
 -- can't use things from the same module. If we could, we could take Proxy
 -- as an argument; much nicer.
 indexedRecord :: String -> Type -> [String] -> Q [Dec]
