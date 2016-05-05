@@ -74,7 +74,7 @@ instance forall n ht tt. (SplitAlts ('S n) tt) => SplitAlts ('S ('S n)) (ht :<|>
     where (left, right) = splitAlts (Proxy :: Proxy ('S n)) t
 
 --
--- Isomorphism beyween records and chains of alternatives (:<|>)
+-- Isomorphism between records and chains of alternatives (:<|>)
 --
 
 recordAlts :: (Generic a, Rep a ~ D1 dm (C1 cm fields), SumIso fields)
