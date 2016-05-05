@@ -16,7 +16,6 @@ import Data.Proxy
 import GHC.Generics hiding (from, to)
 import Control.Lens
 import GHC.Generics.Lens
-import Control.Monad.Reader
 import Unsafe.Coerce
 
 import Servant.API
