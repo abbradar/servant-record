@@ -3,9 +3,9 @@
 module Servant.Record.TH
        ( indexedRecord
        , servantRecord
+       , servantRecords
        ) where
 
-import Data.Char
 import Control.Lens
 import GHC.Generics
 import Language.Haskell.TH
@@ -21,7 +21,9 @@ import Servant.Record
 -- as an argument; much nicer.
 indexedRecord :: String -> Type -> [String] -> Q [Dec]
 indexedRecord (mkName -> name) typ accs = do
-  let accs' = map (\(x, n) -> (mkName x, IsStrict, AppT typ (LitT $ NumTyLit n))) $ zip accs [0..]
+  let nat 0 = PromotedT 'Z
+      nat n = AppT (PromotedT 'S) (nat (n - 1))
+  let accs' = map (\(x, n) -> (mkName x, IsStrict, AppT typ (nat n))) $ zip accs [0..]
   return [DataD [] name [] [RecC name accs'] []]
 
 --
@@ -36,6 +38,4 @@ servantRecord name api dest accs = do
 
 servantRecords :: String -> Name -> [(Name, String)] -> [String] -> Q [Dec]
 servantRecords name api dests accs =
-  concat <$> mapM (\(dest, p) -> servantRecord name api dest (prefix p)) dests
-  
-  where prefix p = map (\(h : t) -> p ++ (toUpper h : t)) accs
+  concat <$> mapM (\(dest, p) -> servantRecord (name ++ p) api dest (map (++p) accs)) dests

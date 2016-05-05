@@ -24,5 +24,17 @@ library
                      , template-haskell
                      , servant
                      , lens
+                     , mtl
   hs-source-dirs:      src
+  default-language:    Haskell2010
+
+test-suite compile-test
+  type:                exitcode-stdio-1.0
+  main-is:             Test.hs
+  build-depends:       base
+                     , servant
+                     , servant-client
+                     , servant-server
+                     , servant-record
+  hs-source-dirs:      tests
   default-language:    Haskell2010
